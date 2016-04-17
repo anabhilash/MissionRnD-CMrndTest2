@@ -31,14 +31,84 @@ The type if node is oddevennode ,and not Node .
 #include <stdlib.h>
 #include <stdio.h>
 
-struct oddevennode{
+struct oddevennode
+{
 	int data;
 	struct oddevennode * next;
 	struct oddevennode * random;
 
 };
 
-int * oddeven_sll(struct oddevennode *head){
-
-	return NULL;
+int * oddeven_sll(struct oddevennode *head)
+{
+	int *arr = NULL;
+	arr = (int *)malloc(2 * sizeof(int));
+	if (head==NULL)
+		return NULL;
+	else
+	{
+		struct oddevennode *firsteven = NULL;
+		struct oddevennode *firstodd = NULL;
+		struct oddevennode *temp = NULL;
+		struct oddevennode *temp1= NULL;
+		struct oddevennode *temp2 = NULL;
+		int odd = 0;
+		int even = 0;
+		temp = head;
+		while (temp != NULL)
+		{
+			if (!((temp->data) & 1))
+			{
+				firsteven = temp;
+				break;
+			}
+			temp = temp->next;
+		}
+		temp = head;
+		while (temp != NULL)
+		{
+			if (((temp->data) & 1))
+			{
+				firstodd = temp;
+				break;
+			}
+			temp = temp->next;
+		}
+		temp1 = firsteven;
+		temp2 = firstodd;
+		if (temp1 != NULL)
+		{
+			even++;
+			temp1 = temp1->next;
+			while (temp1!= NULL)
+			{
+				if (!((temp1->data) & 1))
+				{
+					firsteven->random = temp1;
+					firsteven = temp1;
+					even++;
+				}
+				temp1 = temp1->next;
+			}
+		}
+		if (temp2 != NULL)
+		{
+			odd++;
+			temp2 = temp2->next;
+			while (temp2!= NULL)
+			{
+				if ((temp2->data) & 1)
+				{
+					firstodd->random = temp2;
+					firstodd = temp2;
+					odd++;
+				}
+				temp2 = temp2->next;
+			}
+		}
+		arr[0] = odd;
+		arr[1] = even;
+		return arr;
+	}
+	
 }

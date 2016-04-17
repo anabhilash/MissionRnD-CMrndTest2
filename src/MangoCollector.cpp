@@ -62,13 +62,79 @@ Note :You can use your own custom function with extra parameters, Max height of 
 #include <stdlib.h>
 #include <stdio.h>
 
-struct node{
+struct node
+{
 	int data;
 	struct node *left;
 	struct node *right;
 };
+int height = -1;
+int ways = 0;
+void getdestination(struct node *, int ,int,struct node **,int);
+int gotodest(struct node *, int *, struct node *, int);
+int mangocity_count_ways(struct node *startcity,int k, int *shortestpath,int *shortestpathlen)
+{
+	ways = 0;
+	if (startcity == NULL)
+	{
+		return -1;
+	}
+	struct node *destination = NULL;
+	height = -1;
+	getdestination(startcity, k, 0, &destination,0);
+	if (height != -1 && destination!=NULL)
+	{
+		gotodest(startcity, shortestpath, destination, 0);
+		*shortestpathlen = height;
+		return ways;
+	}
+	else
+	{
+		return -1;
+	}
+}
+void getdestination(struct node *root, int k, int sum, struct node **dest, int i)
+{
+	i++;
+	if (root == NULL)
+		return;
+	sum = sum + root->data;
+	if (root->left == NULL && root->right == NULL)
+	{
+		if (sum == k)
+		{
+			ways++;
+			if (height == -1)
+			{
+				height = i;
+				*dest = root;
+			}
+			else
+			{
+				if (i<height)
+				{
+					*dest = root;
+					height = i;
+				}
+			}
+		}
+	}
 
-int mangocity_count_ways(struct node *startcity,int k, int *shortestpath,int *shortestpathlen){
-	//Just Copy values in shortestpath and shortestpathlen .Dont allocate memory for it .
-	return -1;
+	
+	getdestination(root->left, k, sum, dest, i);
+	
+	getdestination(root->right, k, sum, dest, i);
+}
+int gotodest(struct node *root,int *arr, struct node *dest,int i)
+{
+	if (root == NULL)
+		return 0;
+	if (root == dest || gotodest(root->left,arr, dest,i) ||gotodest(root->right,arr, dest,i))
+	{
+		arr[i] = root->data;
+		i++;
+		return 1;
+	}
+
+	return 0;
 }

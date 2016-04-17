@@ -101,7 +101,7 @@ namespace spec
 			int res = mangocity_count_ways(head,0,NULL,&fl);
 			Assert::AreEqual(-1, res, L"Failed sample 0 for NULL case in LL", 1, 2);
 		};
-		[TestMethod, Timeout(1000)]
+		[TestMethod, Timeout(10000000)]
 		void Sample2_MangoCollector()
 		{
 		    //-999 Elements will not be created
@@ -113,7 +113,7 @@ namespace spec
 			int len = sizeof(arr) / sizeof(arr[0]);
 			testMangoCollector(0, arr, k, ways_exp, len, shortestpath, shortestpath_len);
 		};
-		[TestMethod, Timeout(1000)]
+		[TestMethod, Timeout(100000000)]
 		void Sample3_MangoCollector()
 		{
 			//-999 Elements will not be created
